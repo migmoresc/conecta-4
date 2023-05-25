@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tres en raya</title>
+    <link rel="stylesheet" href="styles/css/reset.css">
     <link rel="stylesheet" href="styles/css/estilo.css">
 </head>
 
@@ -13,52 +14,57 @@
     <header>Bienvenid@ al conecta 4</header>
     <main>
         <div class="jugadores">
-
+            <label for="j1-nombre">Nombre jugador 1: <input type="text" name="j1-nombre" id="j1-nombre"></label>
+            <label for="j1-ficha-color">Color de la ficha: <input type="button" value="" id="j1-ficha-color"></label>
+            <label for="j2-nombre">Nombre jugador 2: <input type="text" name="j2-nombre" id="j2-nombre"></label>
+            <label for="j2-ficha-color">Color de la ficha: <input type="button" value="" id="j2-ficha-color"></label>
+            <button id="button-jugar">Jugar</button>
         </div>
+        <div class="turno"></div>
         <div class="tablero">
-            <img src="assets/img/tablero.jpg" alt="" class="img-tablero">
-            <div class="celda"></div>
-            <div class="celda"></div>
-            <div class="celda"></div>
-            <div class="celda"></div>
-            <div class="celda"></div>
-            <div class="celda"></div>
-            <div class="celda"></div>
-            <div class="celda"></div>
-            <div class="celda"></div>
-            <div class="celda"></div>
-            <div class="celda"></div>
-            <div class="celda"></div>
-            <div class="celda"></div>
-            <div class="celda"></div>
-            <div class="celda"></div>
-            <div class="celda"></div>
-            <div class="celda"></div>
-            <div class="celda"></div>
-            <div class="celda"></div>
-            <div class="celda"></div>
-            <div class="celda"></div>
-            <div class="celda"></div>
-            <div class="celda"></div>
-            <div class="celda"></div>
-            <div class="celda"></div>
-            <div class="celda"></div>
-            <div class="celda"></div>
-            <div class="celda"></div>
-            <div class="celda"></div>
-            <div class="celda"></div>
-            <div class="celda"></div>
-            <div class="celda"></div>
-            <div class="celda"></div>
-            <div class="celda"></div>
-            <div class="celda"></div>
-            <div class="celda"></div>
-            <div class="celda"></div>
-            <div class="celda"></div>
-            <div class="celda"></div>
-            <div class="celda"></div>
-            <div class="celda"></div>
-            <div class="celda"></div>
+            <img src="assets/img/tablero.png" alt="" class="img-tablero">
+            <div id="c-1-1" class="celda"></div>
+            <div id="c-1-2" class="celda"></div>
+            <div id="c-1-3" class="celda"></div>
+            <div id="c-1-4" class="celda"></div>
+            <div id="c-1-5" class="celda"></div>
+            <div id="c-1-6" class="celda"></div>
+            <div id="c-1-7" class="celda"></div>
+            <div id="c-2-1" class="celda"></div>
+            <div id="c-2-2" class="celda"></div>
+            <div id="c-2-3" class="celda"></div>
+            <div id="c-2-4" class="celda"></div>
+            <div id="c-2-5" class="celda"></div>
+            <div id="c-2-6" class="celda"></div>
+            <div id="c-2-7" class="celda"></div>
+            <div id="c-3-1" class="celda"></div>
+            <div id="c-3-2" class="celda"></div>
+            <div id="c-3-3" class="celda"></div>
+            <div id="c-3-4" class="celda"></div>
+            <div id="c-3-5" class="celda"></div>
+            <div id="c-3-6" class="celda"></div>
+            <div id="c-3-7" class="celda"></div>
+            <div id="c-4-1" class="celda"></div>
+            <div id="c-4-2" class="celda"></div>
+            <div id="c-4-3" class="celda"></div>
+            <div id="c-4-4" class="celda"></div>
+            <div id="c-4-5" class="celda"></div>
+            <div id="c-4-6" class="celda"></div>
+            <div id="c-4-7" class="celda"></div>
+            <div id="c-5-1" class="celda"></div>
+            <div id="c-5-2" class="celda"></div>
+            <div id="c-5-3" class="celda"></div>
+            <div id="c-5-4" class="celda"></div>
+            <div id="c-5-5" class="celda"></div>
+            <div id="c-5-6" class="celda"></div>
+            <div id="c-5-7" class="celda"></div>
+            <div id="c-6-1" class="celda"></div>
+            <div id="c-6-2" class="celda"></div>
+            <div id="c-6-3" class="celda"></div>
+            <div id="c-6-4" class="celda"></div>
+            <div id="c-6-5" class="celda"></div>
+            <div id="c-6-6" class="celda"></div>
+            <div id="c-6-7" class="celda"></div>
         </div>
     </main>
     <div class="bro">

@@ -1,0 +1,89 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    text-align: center;
+}
+
+header {
+    padding-top: 24px;
+    font-size: 48px;
+    padding-bottom: 24px;
+}
+
+main {
+    width: 100%;
+    height: 800px;
+    background-color: rosybrown;
+}
+
+label {
+    display: block;
+    padding: 8px;
+    text-align: left;
+    padding-left: 33%;
+}
+
+label:nth-child(odd) {
+    margin-top: 16px;
+}
+
+input[type="button"] {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border-color: transparent;
+    position: relative;
+    transform: translate(16px, 8px);
+
+}
+
+#button-jugar {
+    margin: 32px;
+    padding: 32px;
+}
+
+.turno {
+    width: 100%;
+    height: 64px;
+    background-color: aquamarine;
+}
+
+.tablero {
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 800px;
+    height: 600px;
+    z-index: 0;
+}
+
+.tablero img {
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    position: relative;
+}
+
+.celda {
+    position: absolute;
+    z-index: 1;
+    width: 72px;
+    height: 72px;
+    display: none;
+    /* background-color: yellow;
+    top: 114px;
+    left: 78px; */
+    transition: position 2s linear;
+}
+
+.error {
+    border: red solid 1px;
+}
+
+.bro,
+.jugadores {
+    display: none;
+}
