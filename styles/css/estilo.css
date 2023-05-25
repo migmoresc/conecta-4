@@ -80,10 +80,9 @@ input[type="button"] {
 }
 
 .error {
-    border: red solid 1px;
+    border: red solid 1px !important;
 }
 
-.bro,
-.jugadores {
+.bro {
     display: none;
 }
