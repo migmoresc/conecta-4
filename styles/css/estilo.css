@@ -83,6 +83,8 @@ input[type="button"] {
     border: red solid 1px !important;
 }
 
-.bro {
+.bro,
+.turno,
+.tablero {
     display: none;
 }
