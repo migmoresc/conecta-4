@@ -8,29 +8,44 @@ document.addEventListener("DOMContentLoaded", () => {
     // document.querySelector(".img-tablero").addEventListener("click", (e) => {
     //     console.log(e.offsetX, e.offsetY)
     // });
-    document.querySelector(".img-tablero").addEventListener("mouseover", (e) => {
-        e.target.style.cursor = "url('../assets/img/ficha-black.png') 36 36,auto";
-    });
+    // document.querySelector(".img-tablero").addEventListener("mouseover", (e) => {
+    //     e.target.style.cursor = "url('../assets/img/ficha-black.png') 36 36,auto";
+    // });
 
-    document.querySelectorAll(".area-ficha").forEach((elem) => {
-        elem.addEventListener("mouseover", (e) => {
-            e.target.style.cursor = "url('../assets/img/ficha-black.png') 36 36,auto";
-        })
-    });
+    // document.querySelectorAll(".area-ficha").forEach((elem) => {
+    //     elem.addEventListener("mouseover", (e) => {
+    //         e.target.style.cursor = "url('../assets/img/ficha-black.png') 36 36,auto";
+    //     })
+    // });
 
-    document.querySelectorAll(".area-ficha").forEach((elem) => {
+    document.querySelectorAll(".color-ficha").forEach((elem) => {
         elem.addEventListener("click", (e) => {
             e.preventDefault(e.target);
             console.log(e.target.id);
+            colocarFicha(e.target.id)
+            cambiarTurno();
         })
     });
 
 });
 
+function colocarFicha(celda) {
+
+}
+
+function cambiarTurno() {
+    turno == j1_nombre ? turno = j2_nombre : turno = j1_nombre;
+    color_actual == colores[j1_color] ? color_actual = colores[j2_color] : color_actual = colores[j1_color];
+    cambiarColorFicha(color_actual);
+    document.querySelector(".turno").innerHTML = "Es el turno de " + turno;
+}
+
 const colores = ["red", "green", "yellow", "black", "purple", "pink"];
 let j1_color, j2_color;
-let j1_nombre, j2_nombre;
+var j1_nombre, j2_nombre;
 let turno;
+let color_actual;
+let tablero = [];
 
 function jugar() {
     console.log("jugar")
@@ -38,7 +53,32 @@ function jugar() {
         document.querySelector(".jugadores").style.display = "none";
         document.querySelector(".turno").style.display = "block";
         document.querySelector(".tablero").style.display = "block";
+
+        iniciarTurnos();
     }
+}
+
+function iniciarTurnos() {
+    turno = j1_nombre;
+    document.querySelector(".turno").innerHTML = "Es el turno de " + turno;
+    cambiarColorFicha(colores[j1_color]);
+}
+
+function cambiarColorFicha(color) {
+    color_actual = color;
+    // Getting the stylesheet
+    const stylesheet = document.styleSheets[1];
+    let elementRules;
+
+    // looping through all its rules and getting your rule
+    for (let i = 0; i < stylesheet.cssRules.length; i++) {
+        if (stylesheet.cssRules[i].selectorText === '.color-ficha') {
+            elementRules = stylesheet.cssRules[i];
+        }
+    }
+
+    // modifying the rule in the stylesheet
+    elementRules.style.setProperty('cursor', `url('../../assets/img/ficha-${color}.png') 36 36,auto`);
 }
 
 function comprobarJugadores() {
