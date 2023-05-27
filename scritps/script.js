@@ -21,31 +21,68 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelectorAll(".color-ficha").forEach((elem) => {
         elem.addEventListener("click", (e) => {
             e.preventDefault(e.target);
-            console.log(e.target.id);
-            colocarFicha(e.target.id)
-            cambiarTurno();
+            // console.log(e.target.id);
+            if (colocarFicha(e.target.id)) {
+                cambiarTurno();
+            }
         })
     });
 
 });
 
 function colocarFicha(celda) {
+    // console.log("celda ", celda)
+    let columna = celda[2];
+    // console.log("columna ", columna)
+    if (hayEspacio(columna - 1)) {
+        let y_libre;
+        for (let y = 0; y < 7; y++) {
+            y_libre = y;
+            if (tablero[columna - 1][y] != 0) {
+                y_libre = y - 1;
+                break;
+            }
+        }
+        // console.log(y_libre)
+        // console.log(document.getElementById(`c-${columna}-${y_libre + 1}`))
+        tablero[columna - 1][y_libre] = num_jug_turno;
+        document.getElementById(`c-${columna}-${y_libre + 1}`).style.cssText = `
+        display:block;
+        background-color:${color_actual};
+        top:-50px;
+        left:${left_columnas[columna - 1]}px;`;
+        setTimeout(() => {
+            document.getElementById(`c-${columna}-${y_libre + 1}`).style.top = `${top_filas[y_libre]}px`;
+        }, 250);
 
+        // console.log(tablero)
+        return true;
+    } else {
+        return false;
+    }
+
+}
+
+function hayEspacio(columna) {
+    return tablero[columna][0] == 0;
 }
 
 function cambiarTurno() {
     turno == j1_nombre ? turno = j2_nombre : turno = j1_nombre;
     color_actual == colores[j1_color] ? color_actual = colores[j2_color] : color_actual = colores[j1_color];
+    num_jug_turno == 1 ? num_jug_turno = 2 : num_jug_turno = 1;
     cambiarColorFicha(color_actual);
     document.querySelector(".turno").innerHTML = "Es el turno de " + turno;
 }
 
 const colores = ["red", "green", "yellow", "black", "purple", "pink"];
+const left_columnas = [79, 193, 305, 421, 534, 648];
+const top_filas = [39, 114, 189, 264, 339, 414, 488];
 let j1_color, j2_color;
 var j1_nombre, j2_nombre;
-let turno;
+let turno, num_jug_turno;
 let color_actual;
-let tablero = [];
+let tablero = [[0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0]];
 
 function jugar() {
     console.log("jugar")
@@ -60,6 +97,7 @@ function jugar() {
 
 function iniciarTurnos() {
     turno = j1_nombre;
+    num_jug_turno = 1;
     document.querySelector(".turno").innerHTML = "Es el turno de " + turno;
     cambiarColorFicha(colores[j1_color]);
 }

@@ -71,13 +71,14 @@ input[type="button"] {
 .celda {
     position: absolute;
     z-index: 1;
-    width: 72px;
-    height: 72px;
+    width: 74px;
+    height: 74px;
     display: none;
+    border-radius: 50%;
     /* background-color: yellow;
     top: 114px;
     left: 78px; */
-    transition: position 2s linear;
+    transition: top 2s linear;
 }
 
 .error {
