@@ -1,34 +1,32 @@
 document.addEventListener("DOMContentLoaded", () => {
 
     document.getElementById("button-jugar").addEventListener("click", jugar);
+    document.querySelector(".ganador").addEventListener("click", atras);
     document.getElementById("j1-ficha-color").addEventListener("click", cambiarColor);
     document.getElementById("j2-ficha-color").addEventListener("click", cambiarColor);
     document.getElementById("j1-nombre").addEventListener("change", hayEscrito);
     document.getElementById("j2-nombre").addEventListener("change", hayEscrito);
-    // document.querySelector(".img-tablero").addEventListener("click", (e) => {
-    //     console.log(e.offsetX, e.offsetY)
-    // });
-    // document.querySelector(".img-tablero").addEventListener("mouseover", (e) => {
-    //     e.target.style.cursor = "url('../assets/img/ficha-black.png') 36 36,auto";
-    // });
 
-    // document.querySelectorAll(".area-ficha").forEach((elem) => {
-    //     elem.addEventListener("mouseover", (e) => {
-    //         e.target.style.cursor = "url('../assets/img/ficha-black.png') 36 36,auto";
-    //     })
-    // });
-
-    document.querySelectorAll(".color-ficha").forEach((elem) => {
-        elem.addEventListener("click", (e) => {
-            e.preventDefault(e.target);
-            // console.log(e.target.id);
-            if (colocarFicha(e.target.id)) {
-                cambiarTurno();
-            }
-        })
+    document.querySelectorAll("area.color-ficha").forEach((elem) => {
+        elem.addEventListener("click", clickCelda);
     });
-
 });
+
+function atras() {
+    document.querySelector(".ganador").style.display = "none";
+    document.querySelector(".tablero").style.display = "none";
+    document.querySelector(".turno").style.display = "none";
+    document.querySelector(".jugadores").style.display = "block";
+}
+
+function clickCelda(e) {
+    e.preventDefault();
+    if (!hayGanador) {
+        if (colocarFicha(e.target.id)) {
+            cambiarTurno();
+        }
+    }
+}
 
 function colocarFicha(celda) {
     // console.log("celda ", celda)
@@ -55,6 +53,9 @@ function colocarFicha(celda) {
             document.getElementById(`c-${columna}-${y_libre + 1}`).style.top = `${top_filas[y_libre]}px`;
         }, 250);
 
+        if (comprobarVictoria(columna - 1, y_libre)) {
+            return false;
+        }
         // console.log(tablero)
         return true;
     } else {
@@ -63,7 +64,85 @@ function colocarFicha(celda) {
 
 }
 
+function comprobarVictoria(columna, fila) {
+    console.log("columna: ", columna, " fila: ", fila);
+    console.log(tablero)
+    if (hayVictoriaVertical(columna) || hayVictoriaHorizontal(columna, fila) || hayVictoriaDiagonal(columna, fila)) {
+        document.querySelector(".turno").innerHTML = "Ganador: " + turno;
+        hayGanador = true;
+        document.querySelector(".ganador").style.display = "block";
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function hayVictoriaVertical(columna) {
+    if (tablero[columna].filter((e) => e != 0).length >= 4) {
+        let cont = 0;
+        let ant = 0;
+        for (let y = 0; y < 7; y++) {
+            if (tablero[columna][y] != 0) {
+                if (tablero[columna][y] != ant) {
+                    cont = 1;
+                } else {
+                    cont = cont + 1;
+                }
+                if (cont == 4) {
+                    return true;
+                }
+            }
+
+            ant = tablero[columna][y];
+        }
+    } else {
+        return false;
+    }
+}
+
+function hayVictoriaHorizontal(columna, fila) {
+    if (tablero[columna].filter((e) => e != 0).length >= 4) {
+        let cont = 0;
+        let ant = 0;
+        for (let y = 0; y < 7; y++) {
+            if (tablero[columna][y] == ant || tablero[columna][0] != 0) {
+                cont = cont + 1;
+            } else {
+                cont = 0;
+            }
+            if (cont == 4) {
+                return true;
+            }
+            ant = tablero[columna][y];
+        }
+    } else {
+        return false;
+    }
+}
+
+function hayVictoriaDiagonal(columna, fila) {
+    if (tablero[columna].filter((e) => e != 0).length >= 4) {
+        let cont = 0;
+        let ant = 0;
+        for (let y = 0; y < 7; y++) {
+            if (tablero[columna][y] == ant || tablero[columna][0] != 0) {
+                cont = cont + 1;
+            } else {
+                cont = 0;
+            }
+            if (cont == 4) {
+                alert("A")
+                return true;
+            }
+            ant = tablero[columna][y];
+        }
+    } else {
+        return false;
+    }
+}
+
 function hayEspacio(columna) {
+    // console.log("hayespacio: ", columna)
     return tablero[columna][0] == 0;
 }
 
@@ -78,6 +157,7 @@ function cambiarTurno() {
 const colores = ["red", "green", "yellow", "black", "purple", "pink"];
 const left_columnas = [79, 193, 305, 421, 534, 648];
 const top_filas = [39, 114, 189, 264, 339, 414, 488];
+let hayGanador = false;
 let j1_color, j2_color;
 var j1_nombre, j2_nombre;
 let turno, num_jug_turno;
@@ -90,12 +170,17 @@ function jugar() {
         document.querySelector(".jugadores").style.display = "none";
         document.querySelector(".turno").style.display = "block";
         document.querySelector(".tablero").style.display = "block";
-
         iniciarTurnos();
     }
 }
 
 function iniciarTurnos() {
+    document.querySelectorAll(".celda").forEach((e) => {
+        e.style.backgroundColor = "transparent";
+        e.style.top = "-50px";
+    })
+    tablero = [[0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0]];
+    hayGanador = false;
     turno = j1_nombre;
     num_jug_turno = 1;
     document.querySelector(".turno").innerHTML = "Es el turno de " + turno;
