@@ -67,7 +67,7 @@ function colocarFicha(celda) {
 function comprobarVictoria(columna, fila) {
     console.log("columna: ", columna, " fila: ", fila);
     console.log(tablero)
-    if (hayVictoriaVertical(columna) || hayVictoriaHorizontal(columna, fila) || hayVictoriaDiagonal(columna, fila)) {
+    if (hayVictoriaVertical(columna) || hayVictoriaHorizontal(fila) || hayVictoriaDiagonal(columna, fila)) {
         document.querySelector(".turno").innerHTML = "Ganador: " + turno;
         hayGanador = true;
         document.querySelector(".ganador").style.display = "block";
@@ -77,13 +77,14 @@ function comprobarVictoria(columna, fila) {
     }
 }
 
-function hayVictoriaVertical(columna) {
-    if (tablero[columna].filter((e) => e != 0).length >= 4) {
+function hayGanadorArray(array) {
+    console.log(array)
+    if (array.filter((e) => e != 0).length >= 4) {
         let cont = 0;
         let ant = 0;
         for (let y = 0; y < 7; y++) {
-            if (tablero[columna][y] != 0) {
-                if (tablero[columna][y] != ant) {
+            if (array[y] != 0) {
+                if (array[y] != ant) {
                     cont = 1;
                 } else {
                     cont = cont + 1;
@@ -92,53 +93,40 @@ function hayVictoriaVertical(columna) {
                     return true;
                 }
             }
-
-            ant = tablero[columna][y];
+            ant = array[y];
         }
     } else {
         return false;
     }
 }
 
-function hayVictoriaHorizontal(columna, fila) {
-    if (tablero[columna].filter((e) => e != 0).length >= 4) {
-        let cont = 0;
-        let ant = 0;
-        for (let y = 0; y < 7; y++) {
-            if (tablero[columna][y] == ant || tablero[columna][0] != 0) {
-                cont = cont + 1;
-            } else {
-                cont = 0;
-            }
-            if (cont == 4) {
-                return true;
-            }
-            ant = tablero[columna][y];
-        }
-    } else {
-        return false;
+function hayVictoriaVertical(columna) {
+    return hayGanadorArray(tablero[columna]);
+}
+
+function hayVictoriaHorizontal(fila) {
+    let array = [];
+    for (let x = 0; x < tablero.length; x++) {
+        array.push(tablero[x][fila]);
     }
+    return hayGanadorArray(array);
 }
 
 function hayVictoriaDiagonal(columna, fila) {
-    if (tablero[columna].filter((e) => e != 0).length >= 4) {
-        let cont = 0;
-        let ant = 0;
-        for (let y = 0; y < 7; y++) {
-            if (tablero[columna][y] == ant || tablero[columna][0] != 0) {
-                cont = cont + 1;
-            } else {
-                cont = 0;
-            }
-            if (cont == 4) {
-                alert("A")
-                return true;
-            }
-            ant = tablero[columna][y];
+    let array1 = [];
+    for (let x = 0; x < tablero.length; x++) {
+        if (Math.abs(fila - columna + x) < 7) {
+            array1.push(tablero[x][Math.abs(fila - columna + x)]);
         }
-    } else {
-        return false;
     }
+
+    let array2 = [];
+    for (let x = 0; x < tablero.length; x++) {
+        if (fila + (columna - x) < 7 && fila + (columna - x) >= 0) {
+            array2.push(tablero[x][fila + (columna - x)]);
+        }
+    }
+    return (hayGanadorArray(array1) || hayGanadorArray(array2));
 }
 
 function hayEspacio(columna) {
